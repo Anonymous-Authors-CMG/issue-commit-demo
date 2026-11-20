@@ -1,0 +1,33 @@
+# Suggest the open issue a PR addresses, plus a squash commit message.
+# Action: https://github.com/Anonymous-Authors-CMG/CMG-Skills
+name: Issue Commit
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, reopened]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: PR number to (re)review
+        required: true
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: write
+
+concurrency:
+  group: issue-commit-${{ github.event.pull_request.number || inputs.pr }}
+  cancel-in-progress: true
+
+jobs:
+  suggest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: Anonymous-Authors-CMG/CMG-Skills@v1
+        with:
+          api-key: ${{ secrets.CMG_API_KEY }}
+          base-url: ${{ secrets.CMG_BASE_URL }}
+          model: ${{ secrets.CMG_MODEL }}
+          pr-number: ${{ inputs.pr }}

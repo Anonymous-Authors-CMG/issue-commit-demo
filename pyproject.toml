@@ -1,0 +1,6 @@
+[project]
+name = "textkit"
+version = "0.3.0"
+description = "Small text helpers: slugs, truncation, durations and wrapping."
+requires-python = ">=3.9"
+license = "MIT"
