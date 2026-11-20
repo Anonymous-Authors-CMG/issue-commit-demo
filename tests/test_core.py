@@ -16,6 +16,12 @@ def test_parse_duration_single_unit():
     assert parse_duration("2h") == 7200
 
 
+def test_parse_duration_compound():
+    assert parse_duration("1h30m") == 5400
+    assert parse_duration("2m5s") == 125
+    assert parse_duration("1h1m1s") == 3661
+
+
 def test_parse_duration_rejects_garbage():
     with pytest.raises(ValueError):
         parse_duration("soon")
