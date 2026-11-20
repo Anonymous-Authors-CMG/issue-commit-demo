@@ -13,7 +13,9 @@ def truncate(text, width, ellipsis="..."):
     """Shorten text to at most `width` characters, marking the cut."""
     if len(text) <= width:
         return text
-    return text[:width] + ellipsis
+    if width <= len(ellipsis):
+        return ellipsis[:width]
+    return text[:width - len(ellipsis)] + ellipsis
 
 
 _UNITS = {"h": 3600, "m": 60, "s": 1}
