@@ -23,3 +23,11 @@ def test_parse_duration_rejects_garbage():
 
 def test_wrap():
     assert wrap("the quick brown fox", width=10) == ["the quick", "brown fox"]
+
+
+def test_wrap_long_word_on_its_own_line():
+    assert wrap("a supercalifragilistic b", width=5) == ["a", "supercalifragilistic", "b"]
+
+
+def test_wrap_empty():
+    assert wrap("") == []

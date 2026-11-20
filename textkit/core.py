@@ -1,5 +1,4 @@
 import re
-import unicodedata
 
 
 def slugify(text, sep="-"):
@@ -31,13 +30,16 @@ def parse_duration(spec):
 
 def wrap(text, width=70):
     """Greedy word wrap. Returns a list of lines."""
-    lines, current = [], ""
+    lines, current = [], []
+    length = 0
     for word in text.split():
-        if current and len(current) + 1 + len(word) > width:
-            lines.append(current)
-            current = word
+        extra = len(word) + (1 if current else 0)
+        if current and length + extra > width:
+            lines.append(" ".join(current))
+            current, length = [word], len(word)
         else:
-            current = "%s %s" % (current, word) if current else word
+            current.append(word)
+            length += extra
     if current:
-        lines.append(current)
+        lines.append(" ".join(current))
     return lines
