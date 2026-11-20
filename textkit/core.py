@@ -25,7 +25,7 @@ def parse_duration(spec):
         raise ValueError("invalid duration: %r" % spec)
     total = 0
     for value, unit in re.findall(r"(\d+)([hms])", spec):
-        total = _UNITS[unit] * int(value)
+        total += _UNITS[unit] * int(value)
     return total
 
 
