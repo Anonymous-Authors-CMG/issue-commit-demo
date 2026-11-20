@@ -12,11 +12,18 @@ requests that fix them. The bot has commented on every PR.
 
 ## The three cases
 
-| PR | What the PR does | What the bot does |
+The repository has eight open issues: three real bugs and five unrelated
+requests that serve as distractors. Each PR below shows one situation.
+
+| PR | What the PR does | What the bot said |
 |---|---|---|
-| **[#A](../../pulls)** | Fixes a bug. The author forgot to write `Fixes #…`. | Finds the issue among all open ones, shows the evidence, and suggests a message ending in `Fixes #n`. |
-| **[#B](../../pulls)** | Refactors code. There is no matching issue. | Says no issue clearly matches, instead of guessing, and writes the message from the diff alone. |
-| **[#C](../../pulls)** | Fixes a bug and already says `Fixes #n`. | Skips the search and writes the message from that issue. |
+| **[#9](../../pull/9)** Sum all units in parse_duration | Fixes [#2](../../issues/2). The description never mentions it. | Found **#2** among the eight, strong match, and suggested a message ending in `Fixes #2`. |
+| **[#10](../../pull/10)** Build wrap() lines from word lists | A refactor. No issue asks for it. | **No match.** It rejected [#3](../../issues/3), a feature request for the same `wrap()` function, because the refactor doesn't do what #3 asks. |
+| **[#11](../../pull/11)** Count the ellipsis toward truncate width | Fixes [#4](../../issues/4) and says so. | Skipped the search and wrote the message from #4. |
+
+#10 is the interesting one. A search that only matches words would link it to
+#3, since both are about `wrap()`. The bot checks each candidate against the
+diff before suggesting it, and says "no match" when nothing holds up.
 
 Each PR's comment is posted by `github-actions[bot]`. The full run, including
 timing and every step, is under [Actions](../../actions/workflows/issue-commit.yml);
